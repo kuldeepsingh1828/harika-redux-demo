@@ -5,6 +5,11 @@ const initialState = {
         id: 1,
         title: 'Learn React',
         completed: false
+    },
+    {
+        id: 2,
+        title: 'Learn Redux',
+        completed: false
     }],
     completedTodos: [{
         id: 2,
@@ -17,7 +22,7 @@ export default function reducer(state = initialState, action) {
         case ADD_TODO:
             return {
                 ...state,
-                todos: [...state.todos, action.payload]
+                todos: [{ id: state.todos.length + 1, title: action.payload, completed: false }, ...state.todos]
             }
         case COMPLETE_TODO:
             return {
@@ -25,11 +30,15 @@ export default function reducer(state = initialState, action) {
                 completedTodos: [...state.completedTodos, action.payload]
             }
         case UPDATE_TODO:
-            state.todos[index] = action.payload;
-            return { ...state }
+            const { index, newtodo } = action.payload;
+            console.log(action.payload)
+            state.todos[index].title = newtodo;
+
+            return { ...state, todos: [...state.todos] }
         case DELETE_TODO:
-            state.todos.splice(index, 1);
-            return { ...state }
+            state.todos.splice(action.payload.index, 1);
+            console.log(state)
+            return { ...state, todos: [...state.todos] }
         case GET_TODOS:
             return { ...state }
         default:
