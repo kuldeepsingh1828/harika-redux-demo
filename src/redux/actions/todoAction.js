@@ -17,10 +17,10 @@ export const addTodoAction = (todo) => {
     }
 }
 
-export const completeTodoAction = (todo) => {
+export const completeTodoAction = (index, todo) => {
     return {
         type: COMPLETE_TODO,
-        payload: todo
+        payload: { index, todo }
     }
 }
 
@@ -34,7 +34,7 @@ export const updateTodoAction = (index, newtodo) => {
 export const deleteTodoAction = (index) => {
     return {
         type: DELETE_TODO,
-        payload: {index}
+        payload: { index }
     }
 }
 

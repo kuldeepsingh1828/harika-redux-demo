@@ -25,9 +25,11 @@ export default function reducer(state = initialState, action) {
                 todos: [{ id: state.todos.length + 1, title: action.payload, completed: false }, ...state.todos]
             }
         case COMPLETE_TODO:
+            let { index: id, todo } = action.payload;
+            let pending = state.todos.filter((t, i) => i != id);
             return {
-                ...state,
-                completedTodos: [...state.completedTodos, action.payload]
+                todos: [...pending],
+                completedTodos: [...state.completedTodos, state.todos[id]]
             }
         case UPDATE_TODO:
             const { index, newtodo } = action.payload;
