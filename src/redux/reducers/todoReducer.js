@@ -10,11 +10,6 @@ const initialState = {
         id: 2,
         title: 'Learn Redux',
         completed: false
-    }],
-    completedTodos: [{
-        id: 2,
-        title: 'Learn Redux',
-        completed: true
     }]
 }
 export default function reducer(state = initialState, action) {
@@ -26,10 +21,17 @@ export default function reducer(state = initialState, action) {
             }
         case COMPLETE_TODO:
             let { index: id, todo } = action.payload;
-            let pending = state.todos.filter((t, i) => i != id);
+
+            //update todo completed
+            let todos = state.todos.map((item, index) => {
+                if (index === id) {
+                    item.completed = true;
+                }
+                return item;
+            })
+
             return {
-                todos: [...pending],
-                completedTodos: [...state.completedTodos, state.todos[id]]
+                todos: [...todos]
             }
         case UPDATE_TODO:
             const { index, newtodo } = action.payload;
